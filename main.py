@@ -8,9 +8,9 @@ detector = dlib.get_frontal_face_detector()
 # 68개의 얼굴 특징점 추출
 predictor = dlib.shape_predictor('face_landmark.dat')
 # load video
-cap = cv2.VideoCapture('samples/girl.mp4')
+cap = cv2.VideoCapture('samples/boy.mp4')
 # load overlay image
-overlay = cv2.imread('samples/Apeach.png', cv2.IMREAD_UNCHANGED)
+overlay = cv2.imread('samples/smiley.png', cv2.IMREAD_UNCHANGED)
 
 while True:
     ret, img = cap.read()
@@ -24,6 +24,8 @@ while True:
 
     # 얼굴 인식
     faces = detector(img)
+    if len(faces) == 0:
+        continue
     # 여러 얼굴이 나오기 때문에 얼굴 한개만 지정
     face = faces[0]
 
@@ -48,5 +50,6 @@ while True:
     for s in shape_2d:
         cv2.circle(img, center=tuple(s), radius=1, color=(255, 255, 255), thickness=2, lineType=cv2.LINE_AA)
 
+    cv2.imshow('img', img)
     cv2.imshow('result',result)
     cv2.waitKey(1)
